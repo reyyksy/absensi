@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Absensi Prodi TJKT</title>
+    <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Login Section -->
+        <div id="login-section" class="login-section">
+            <div class="login-card">
+                <h1>Admin Login</h1>
+                <p>Masukkan password untuk mengakses dashboard</p>
+                <form id="login-form">
+                    <input
+                        type="password"
+                        id="password-input"
+                        class="input-field"
+                        placeholder="Password"
+                        required
+                    >
+                    <button type="submit" class="btn btn-primary btn-full">
+                        Login
+                    </button>
+                </form>
+                <div id="login-error" class="error-message hidden"></div>
+            </div>
+        </div>
+
+        <!-- Dashboard Section -->
+        <div id="dashboard-section" class="dashboard-section hidden">
+            <!-- Header -->
+            <header class="admin-header">
+                <div class="header-left">
+                    <h1>Dashboard Absensi</h1>
+                    <p>Prodi TJKT - SMK YASBAM</p>
+                </div>
+                <button class="btn btn-secondary" id="logout-btn">
+                    Logout
+                </button>
+            </header>
+
+            <!-- Statistics -->
+            <div class="statistics">
+                <div class="stat-card">
+                    <h3>Hadir</h3>
+                    <p class="stat-number" id="stat-hadir">0</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Izin</h3>
+                    <p class="stat-number" id="stat-izin">0</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Sakit</h3>
+                    <p class="stat-number" id="stat-sakit">0</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Tanpa Keterangan</h3>
+                    <p class="stat-number" id="stat-tanpa-keterangan">0</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Belum Absen</h3>
+                    <p class="stat-number" id="stat-belum-absen">0</p>
+                </div>
+            </div>
+
+            <!-- Filters -->
+            <div class="filters">
+                <input
+                    type="text"
+                    id="search-filter"
+                    class="filter-input"
+                    placeholder="Cari nama..."
+                >
+                <select id="class-filter" class="filter-select">
+                    <option value="">Semua Kelas</option>
+                    <option value="10 A TJKT">10 A TJKT</option>
+                    <option value="10 B TJKT">10 B TJKT</option>
+                    <option value="10 C TJKT">10 C TJKT</option>
+                    <option value="11 A TJKT">11 A TJKT</option>
+                    <option value="11 B TJKT">11 B TJKT</option>
+                    <option value="11 C TJKT">11 C TJKT</option>
+                    <option value="12 TJKT">12 TJKT</option>
+                    <option value="12 TKJ">12 TKJ</option>
+                </select>
+                <select id="status-filter" class="filter-select">
+                    <option value="">Semua Status</option>
+                    <option value="hadir">Hadir</option>
+                    <option value="izin">Izin</option>
+                    <option value="sakit">Sakit</option>
+                    <option value="tanpa_keterangan">Tanpa Keterangan</option>
+                    <option value="belum_absen">Belum Absen</option>
+                </select>
+            </div>
+
+            <!-- Attendance Table -->
+            <div class="table-container">
+                <table class="attendance-table">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Nama</th>
+                            <th>Kelas</th>
+                            <th>Jam</th>
+                            <th>Status</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="attendance-tbody">
+                        <!-- Rows will be inserted here -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Loading Indicator -->
+            <div id="loading-indicator" class="loading-indicator hidden">
+                <div class="spinner"></div>
+                <p>Memuat data...</p>
+            </div>
+        </div>
+
+        <!-- Status Modal -->
+        <div id="status-modal" class="modal hidden">
+            <div class="modal-content">
+                <h2>Ubah Status</h2>
+                <div class="modal-member-info">
+                    <p class="modal-name" id="modal-member-name"></p>
+                    <p class="modal-number">No. <span id="modal-member-number"></span></p>
+                </div>
+                <div class="status-options">
+                    <button class="status-btn" data-status="hadir">Hadir</button>
+                    <button class="status-btn" data-status="izin">Izin</button>
+                    <button class="status-btn" data-status="sakit">Sakit</button>
+                    <button class="status-btn" data-status="tanpa_keterangan">Tanpa Keterangan</button>
+                </div>
+                <button class="btn btn-secondary btn-full" id="modal-close">
+                    Batal
+                </button>
+            </div>
+        </div>
+
+        <!-- Modal Overlay -->
+        <div id="modal-overlay" class="modal-overlay hidden"></div>
+    </div>
+
+    <script src="/js/admin.js"></script>
+</body>
+</html>

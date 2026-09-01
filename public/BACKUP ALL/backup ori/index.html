@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Absensi - Prodi TJKT SMK YASBAM</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1>Absensi Siswa</h1>
+            <p>Prodi TJKT - SMK YASBAM</p>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Loading State -->
+            <div id="loading-state" class="state-container">
+                <div class="spinner"></div>
+                <p>Memuat data...</p>
+            </div>
+
+            <!-- Search State -->
+            <div id="search-state" class="state-container hidden">
+                <div class="search-section">
+                    <input
+                        type="text"
+                        id="search-input"
+                        class="search-input"
+                        placeholder="Cari nama siswa..."
+                        autocomplete="off"
+                    >
+                </div>
+
+                <!-- Search Results -->
+                <div id="search-results" class="search-results"></div>
+
+                <!-- Empty State -->
+                <div id="empty-state" class="empty-state hidden">
+                    <p>Siswa tidak ditemukan</p>
+                </div>
+            </div>
+
+            <!-- Confirmation State -->
+            <div id="confirmation-state" class="state-container hidden">
+                <div class="confirmation-card">
+                    <h2>Pastikan ini nama kamu</h2>
+                    <div class="member-info">
+                        <p class="member-name" id="confirm-name"></p>
+                        <p class="member-number">
+                            No. Absen <span id="confirm-number"></span>
+                        </p>
+                        <p class="member-class" id="confirm-class"></p>
+                    </div>
+                    <div class="button-group">
+                        <button class="btn btn-secondary" id="btn-back">
+                            Kembali
+                        </button>
+                        <button class="btn btn-primary" id="btn-confirm">
+                            Saya Hadir
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Success State -->
+            <div id="success-state" class="state-container hidden">
+                <div class="success-card">
+                    <div class="success-icon">✓</div>
+                    <h2>Absensi Berhasil!</h2>
+                    <div class="success-info">
+                        <p class="label">Nama</p>
+                        <p class="value" id="success-name"></p>
+
+                        <p class="label">Nomor Absen</p>
+                        <p class="value" id="success-number"></p>
+
+                        <p class="label">Waktu</p>
+                        <p class="value" id="success-time"></p>
+                    </div>
+                    <button class="btn btn-primary" id="btn-absen-lagi">
+                        Absen Siswa Lain
+                    </button>
+                </div>
+            </div>
+
+            <!-- Already Attended State -->
+            <div id="attended-state" class="state-container hidden">
+                <div class="attended-card">
+                    <div class="attended-icon">⚠</div>
+                    <h2>Sudah Absen</h2>
+                    <p class="attended-message">
+                        Kamu sudah absen pada pertemuan ini.
+                    </p>
+                    <button class="btn btn-primary" id="btn-back-from-attended">
+                        Kembali
+                    </button>
+                </div>
+            </div>
+
+            <!-- Error State -->
+            <div id="error-state" class="state-container hidden">
+                <div class="error-card">
+                    <div class="error-icon">✕</div>
+                    <h2>Terjadi Kesalahan</h2>
+                    <p class="error-message" id="error-message"></p>
+                    <button class="btn btn-primary" id="btn-back-from-error">
+                        Kembali
+                    </button>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>&copy; 2026 SMK YASBAM</p>
+        </footer>
+    </div>
+
+    <script src="/js/app.js"></script>
+</body>
+</html>

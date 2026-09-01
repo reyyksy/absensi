@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Absensi Prodi TJKT - SMK YASBAM</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <base target="_blank">
+<base target="_blank">
+</head>
+<body>
+    <div class="page">
+        <!-- Official Header -->
+        <header class="header">
+            <div class="header-inner">
+                <img src="logo/yasbam.jpg" alt="Logo SMK YASBAM" class="logo logo-sekolah" onerror="this.style.display='none'">
+                <div class="header-text">
+                    <div class="header-institution">SMK YASBAM</div>
+                    <div class="header-prodi">Program Keahlian TJKT</div>
+                    <div class="header-system">Sistem Absensi</div>
+                </div>
+                <img src="logo/tjkt.jpg" alt="Logo Prodi TJKT" class="logo logo-tjkt" onerror="this.style.display='none'">
+            </div>
+        </header>
+
+        <!-- Main -->
+        <main class="main">
+            <!-- Search State -->
+            <div id="search-state" class="state">
+                <div class="section-header">
+                    <h2 class="section-title">Absensi Anggota</h2>
+                    <p class="section-desc">Silakan cari nama kamu untuk melakukan absensi.</p>
+                </div>
+
+                <div class="search-wrap">
+                    <label for="search-input" class="sr-only">Cari nama</label>
+                    <div class="search-box">
+                        <svg class="search-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                            <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"/>
+                        </svg>
+                        <input
+                            type="text"
+                            id="search-input"
+                            class="search-input"
+                            placeholder="Cari nama anggota..."
+                            autocomplete="off"
+                        >
+                    </div>
+                </div>
+
+                <div id="search-results" class="results"></div>
+
+                <div id="empty-state" class="empty hidden">
+                    <p>Nama tidak ditemukan</p>
+                </div>
+            </div>
+
+            <!-- Confirmation State -->
+            <div id="confirmation-state" class="state hidden">
+                <div class="confirm-card">
+                    <div class="confirm-avatar" id="confirm-avatar"></div>
+                    <p class="confirm-label">Pastikan ini data kamu</p>
+                    <p class="confirm-name" id="confirm-name"></p>
+                    <div class="confirm-detail">
+                        <span>No. Absen <b id="confirm-number"></b></span>
+                        <span>Kelas <b id="confirm-class"></b></span>
+                    </div>
+                    <div class="confirm-actions">
+                        <button class="btn btn-outline" id="btn-back" type="button">Batal</button>
+                        <button class="btn btn-main" id="btn-confirm" type="button">
+                            <span class="btn-text">Saya Hadir</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Success State -->
+            <div id="success-state" class="state hidden">
+                <div class="result-card success">
+                    <div class="result-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="20 6 9 17 4 12"/>
+                        </svg>
+                    </div>
+                    <h2>Absensi Berhasil</h2>
+                    <div class="result-info">
+                        <div class="info-row">
+                            <span class="info-label">Nama</span>
+                            <span class="info-val" id="success-name"></span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">No. Absen</span>
+                            <span class="info-val" id="success-number"></span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Waktu</span>
+                            <span class="info-val" id="success-time"></span>
+                        </div>
+                    </div>
+                    <button class="btn btn-main btn-wide" id="btn-absen-lagi" type="button">Absen Lagi</button>
+                </div>
+            </div>
+
+            <!-- Already Attended State -->
+            <div id="attended-state" class="state hidden">
+                <div class="result-card warn">
+                    <div class="result-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
+                            <line x1="12" y1="9" x2="12" y2="13"/>
+                            <line x1="12" y1="17" x2="12.01" y2="17"/>
+                        </svg>
+                    </div>
+                    <h2>Sudah Absen</h2>
+                    <p class="result-desc">Kamu sudah absen di pertemuan ini. Satu orang hanya boleh absen sekali.</p>
+                    <button class="btn btn-main btn-wide" id="btn-back-from-attended" type="button">Kembali</button>
+                </div>
+            </div>
+
+            <!-- Error State -->
+            <div id="error-state" class="state hidden">
+                <div class="result-card error">
+                    <div class="result-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"/>
+                            <line x1="15" y1="9" x2="9" y2="15"/>
+                            <line x1="9" y1="9" x2="15" y2="15"/>
+                        </svg>
+                    </div>
+                    <h2>Terjadi Kesalahan</h2>
+                    <p class="result-desc" id="error-message"></p>
+                    <button class="btn btn-main btn-wide" id="btn-back-from-error" type="button">Coba Lagi</button>
+                </div>
+            </div>
+
+            <!-- Instagram Prodi Section -->
+            <section class="prodi-info" id="prodi-info">
+                <div class="prodi-info-header">
+                    <svg class="prodi-info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+                        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+                    </svg>
+                    <span>Informasi Prodi</span>
+                </div>
+                <h3 class="prodi-info-title">Instagram Prodi TJKT</h3>
+                <p class="prodi-info-desc">Ikuti informasi dan kegiatan Prodi TJKT melalui Instagram resmi kami.</p>
+                <a href="https://www.instagram.com/tjkt_smkyasbam" class="prodi-info-link" target="_blank" rel="noopener noreferrer">
+                    <svg class="prodi-info-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+                        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+                    </svg>
+                    <span>@tjkt_smkyasbam</span>
+                    <svg class="prodi-info-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <line x1="7" y1="17" x2="17" y2="7"/>
+                        <polyline points="7 7 17 7 17 17"/>
+                    </svg>
+                </a>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <div class="footer-brand">
+                <span class="footer-school">SMK YASBAM</span>
+                <span class="footer-divider">|</span>
+                <span class="footer-prodi">Program Keahlian TJKT</span>
+            </div>
+            <p class="footer-system">Sistem Absensi Prodi TJKT</p>
+            <p class="footer-copy">&copy; 2025 SMK YASBAM. Hak Cipta Dilindungi.</p>
+        </footer>
+    </div>
+
+    <script src="/js/app.js"></script>
+</body>
+</html>
