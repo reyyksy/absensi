@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Admin - Absensi Prodi TJKT SMK YASBAM</title>
+    <link rel="stylesheet" href="/css/admin.css">
+<base target="_blank">
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Login Section -->
+        <div id="login-section" class="login-section">
+            <div class="login-card">
+                <div class="login-branding">
+                    <div class="login-logos">
+                        <img src="logo/yasbam.jpg" alt="Logo SMK YASBAM" class="login-logo" onerror="this.style.display='none'">
+                        <img src="logo/yasbam.jpg" alt="Logo Prodi TJKT" class="login-logo" onerror="this.style.display='none'">
+                    </div>
+                    <h1>Admin Dashboard</h1>
+                </div>
+                <p>Masukkan password untuk mengakses dashboard absensi</p>
+                <form id="login-form">
+                    <label for="password-input" class="sr-only">Password</label>
+                    <input
+                        type="password"
+                        id="password-input"
+                        class="input-field"
+                        placeholder="Password"
+                        required
+                        aria-label="Password"
+                    >
+                    <button type="submit" class="btn btn-primary btn-full">
+                        Login
+                    </button>
+                </form>
+                <div id="login-error" class="error-message hidden" role="alert" aria-live="polite"></div>
+            </div>
+        </div>
+
+        <!-- Dashboard Section -->
+        <div id="dashboard-section" class="dashboard-section hidden">
+            <!-- Header -->
+            <header class="admin-header">
+                <div class="header-left">
+                    <h1>Dashboard Absensi</h1>
+                    <p>Prodi TJKT &mdash; SMK YASBAM</p>
+                </div>
+                <button class="btn btn-secondary" id="logout-btn" type="button">
+                    Logout
+                </button>
+            </header>
+
+            <!-- Statistics -->
+            <div class="statistics">
+                <div class="stat-card status-hadir">
+                    <h3>Hadir</h3>
+                    <p class="stat-number" id="stat-hadir">0</p>
+                </div>
+                <div class="stat-card status-izin">
+                    <h3>Izin</h3>
+                    <p class="stat-number" id="stat-izin">0</p>
+                </div>
+                <div class="stat-card status-sakit">
+                    <h3>Sakit</h3>
+                    <p class="stat-number" id="stat-sakit">0</p>
+                </div>
+                <div class="stat-card status-tanpa_keterangan">
+                    <h3>Tanpa Keterangan</h3>
+                    <p class="stat-number" id="stat-tanpa-keterangan">0</p>
+                </div>
+                <div class="stat-card status-belum_absen">
+                    <h3>Belum Absen</h3>
+                    <p class="stat-number" id="stat-belum-absen">0</p>
+                </div>
+            </div>
+
+            <!-- Filters -->
+            <div class="filters">
+                <label for="search-filter" class="sr-only">Cari nama</label>
+                <input
+                    type="text"
+                    id="search-filter"
+                    class="filter-input"
+                    placeholder="Cari nama atau nomor absen..."
+                    aria-label="Cari nama atau nomor absen"
+                >
+                <label for="class-filter" class="sr-only">Filter kelas</label>
+                <select id="class-filter" class="filter-select" aria-label="Filter kelas">
+                    <option value="">Semua Kelas</option>
+                    <option value="10 A TJKT">10 A TJKT</option>
+                    <option value="10 B TJKT">10 B TJKT</option>
+                    <option value="10 C TJKT">10 C TJKT</option>
+                    <option value="11 A TJKT">11 A TJKT</option>
+                    <option value="11 B TJKT">11 B TJKT</option>
+                    <option value="11 C TJKT">11 C TJKT</option>
+                    <option value="12 TJKT">12 TJKT</option>
+                    <option value="12 TKJ">12 TKJ</option>
+                </select>
+                <label for="status-filter" class="sr-only">Filter status</label>
+                <select id="status-filter" class="filter-select" aria-label="Filter status">
+                    <option value="">Semua Status</option>
+                    <option value="hadir">Hadir</option>
+                    <option value="izin">Izin</option>
+                    <option value="sakit">Sakit</option>
+                    <option value="tanpa_keterangan">Tanpa Keterangan</option>
+                    <option value="belum_absen">Belum Absen</option>
+                </select>
+            </div>
+
+            <!-- Attendance Table -->
+            <div class="table-wrapper">
+                <div class="table-container">
+                    <table class="attendance-table">
+                        <thead>
+                            <tr>
+                                <th scope="col">No Absen</th>
+                                <th scope="col">Nama</th>
+                                <th scope="col">Kelas</th>
+                                <th scope="col">Jam</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="attendance-tbody">
+                            <!-- Rows will be inserted here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Loading Indicator -->
+            <div id="loading-indicator" class="loading-indicator hidden">
+                <div class="spinner" role="status" aria-label="Memuat data"></div>
+                <p>Memuat data absensi...</p>
+            </div>
+        </div>
+
+        <!-- Status Modal -->
+        <div id="status-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+            <h2 id="modal-title">Ubah Status Kehadiran</h2>
+            <div class="modal-member-info">
+                <p class="modal-name" id="modal-member-name"></p>
+                <p class="modal-number">No. Absen <span id="modal-member-number"></span></p>
+            </div>
+            <div class="status-options">
+                <button class="status-btn" data-status="hadir" type="button">Hadir</button>
+                <button class="status-btn" data-status="izin" type="button">Izin</button>
+                <button class="status-btn" data-status="sakit" type="button">Sakit</button>
+                <button class="status-btn" data-status="tanpa_keterangan" type="button">Tanpa Keterangan</button>
+            </div>
+            <button class="btn btn-secondary btn-full" id="modal-close" type="button">
+                Batal
+            </button>
+        </div>
+
+        <!-- Modal Overlay -->
+        <div id="modal-overlay" class="modal-overlay hidden"></div>
+    </div>
+
+    <script src="/js/admin.js"></script>
+</body>
+</html>

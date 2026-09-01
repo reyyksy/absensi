@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Admin - Absensi Prodi TJKT SMK YASBAM</title>
+    <title>Admin - Sistem Absensi Prodi TJKT SMK YASBAM</title>
     <link rel="stylesheet" href="/css/admin.css">
+    <base target="_blank">
 <base target="_blank">
 </head>
 <body>
@@ -15,11 +16,15 @@
                 <div class="login-branding">
                     <div class="login-logos">
                         <img src="logo/yasbam.jpg" alt="Logo SMK YASBAM" class="login-logo" onerror="this.style.display='none'">
-                        <img src="logo/yasbam.jpg" alt="Logo Prodi TJKT" class="login-logo" onerror="this.style.display='none'">
+                        <img src="logo/tjkt.jpg" alt="Logo Prodi TJKT" class="login-logo" onerror="this.style.display='none'">
                     </div>
-                    <h1>Admin Dashboard</h1>
+                    <div class="login-brand-text">
+                        <div class="login-institution">SMK YASBAM</div>
+                        <div class="login-prodi">Program Keahlian TJKT</div>
+                        <h1>Admin Dashboard</h1>
+                    </div>
                 </div>
-                <p>Masukkan password untuk mengakses dashboard absensi</p>
+                <p class="login-instruction">Masukkan password untuk mengakses dashboard absensi</p>
                 <form id="login-form">
                     <label for="password-input" class="sr-only">Password</label>
                     <input
@@ -40,76 +45,115 @@
 
         <!-- Dashboard Section -->
         <div id="dashboard-section" class="dashboard-section hidden">
-            <!-- Header -->
+            <!-- Official Header -->
             <header class="admin-header">
-                <div class="header-left">
-                    <h1>Dashboard Absensi</h1>
-                    <p>Prodi TJKT &mdash; SMK YASBAM</p>
+                <div class="header-branding">
+                    <img src="logo/yasbam.jpg" alt="Logo SMK YASBAM" class="header-logo" onerror="this.style.display='none'">
+                    <div class="header-text">
+                        <div class="header-institution">SMK YASBAM</div>
+                        <div class="header-prodi">Program Keahlian TJKT</div>
+                        <div class="header-system">Sistem Absensi</div>
+                    </div>
+                    <img src="logo/tjkt.jpg" alt="Logo Prodi TJKT" class="header-logo" onerror="this.style.display='none'">
                 </div>
-                <button class="btn btn-secondary" id="logout-btn" type="button">
-                    Logout
-                </button>
+                <div class="header-actions">
+                    <span class="admin-badge">ADMIN</span>
+                    <button class="btn btn-secondary" id="logout-btn" type="button">
+                        Logout
+                    </button>
+                </div>
             </header>
 
             <!-- Statistics -->
             <div class="statistics">
                 <div class="stat-card status-hadir">
-                    <h3>Hadir</h3>
-                    <p class="stat-number" id="stat-hadir">0</p>
+                    <div class="stat-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                    </div>
+                    <div class="stat-info">
+                        <h3>Hadir</h3>
+                        <p class="stat-number" id="stat-hadir">0</p>
+                    </div>
                 </div>
                 <div class="stat-card status-izin">
-                    <h3>Izin</h3>
-                    <p class="stat-number" id="stat-izin">0</p>
+                    <div class="stat-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                    </div>
+                    <div class="stat-info">
+                        <h3>Izin</h3>
+                        <p class="stat-number" id="stat-izin">0</p>
+                    </div>
                 </div>
                 <div class="stat-card status-sakit">
-                    <h3>Sakit</h3>
-                    <p class="stat-number" id="stat-sakit">0</p>
+                    <div class="stat-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                    </div>
+                    <div class="stat-info">
+                        <h3>Sakit</h3>
+                        <p class="stat-number" id="stat-sakit">0</p>
+                    </div>
                 </div>
                 <div class="stat-card status-tanpa_keterangan">
-                    <h3>Tanpa Keterangan</h3>
-                    <p class="stat-number" id="stat-tanpa-keterangan">0</p>
+                    <div class="stat-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+                    </div>
+                    <div class="stat-info">
+                        <h3>Tanpa Keterangan</h3>
+                        <p class="stat-number" id="stat-tanpa-keterangan">0</p>
+                    </div>
                 </div>
                 <div class="stat-card status-belum_absen">
-                    <h3>Belum Absen</h3>
-                    <p class="stat-number" id="stat-belum-absen">0</p>
+                    <div class="stat-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    </div>
+                    <div class="stat-info">
+                        <h3>Belum Absen</h3>
+                        <p class="stat-number" id="stat-belum-absen">0</p>
+                    </div>
                 </div>
             </div>
 
             <!-- Filters -->
             <div class="filters">
-                <label for="search-filter" class="sr-only">Cari nama</label>
-                <input
-                    type="text"
-                    id="search-filter"
-                    class="filter-input"
-                    placeholder="Cari nama atau nomor absen..."
-                    aria-label="Cari nama atau nomor absen"
-                >
-                <label for="class-filter" class="sr-only">Filter kelas</label>
-                <select id="class-filter" class="filter-select" aria-label="Filter kelas">
-                    <option value="">Semua Kelas</option>
-                    <option value="10 A TJKT">10 A TJKT</option>
-                    <option value="10 B TJKT">10 B TJKT</option>
-                    <option value="10 C TJKT">10 C TJKT</option>
-                    <option value="11 A TJKT">11 A TJKT</option>
-                    <option value="11 B TJKT">11 B TJKT</option>
-                    <option value="11 C TJKT">11 C TJKT</option>
-                    <option value="12 TJKT">12 TJKT</option>
-                    <option value="12 TKJ">12 TKJ</option>
-                </select>
-                <label for="status-filter" class="sr-only">Filter status</label>
-                <select id="status-filter" class="filter-select" aria-label="Filter status">
-                    <option value="">Semua Status</option>
-                    <option value="hadir">Hadir</option>
-                    <option value="izin">Izin</option>
-                    <option value="sakit">Sakit</option>
-                    <option value="tanpa_keterangan">Tanpa Keterangan</option>
-                    <option value="belum_absen">Belum Absen</option>
-                </select>
+                <div class="filters-group">
+                    <label for="search-filter" class="sr-only">Cari nama</label>
+                    <input
+                        type="text"
+                        id="search-filter"
+                        class="filter-input"
+                        placeholder="Cari nama atau nomor absen..."
+                        aria-label="Cari nama atau nomor absen"
+                    >
+                    <label for="class-filter" class="sr-only">Filter kelas</label>
+                    <select id="class-filter" class="filter-select" aria-label="Filter kelas">
+                        <option value="">Semua Kelas</option>
+                        <option value="10 A TJKT">10 A TJKT</option>
+                        <option value="10 B TJKT">10 B TJKT</option>
+                        <option value="10 C TJKT">10 C TJKT</option>
+                        <option value="11 A TJKT">11 A TJKT</option>
+                        <option value="11 B TJKT">11 B TJKT</option>
+                        <option value="11 C TJKT">11 C TJKT</option>
+                        <option value="12 TJKT">12 TJKT</option>
+                        <option value="12 TKJ">12 TKJ</option>
+                    </select>
+                    <label for="status-filter" class="sr-only">Filter status</label>
+                    <select id="status-filter" class="filter-select" aria-label="Filter status">
+                        <option value="">Semua Status</option>
+                        <option value="hadir">Hadir</option>
+                        <option value="izin">Izin</option>
+                        <option value="sakit">Sakit</option>
+                        <option value="tanpa_keterangan">Tanpa Keterangan</option>
+                        <option value="belum_absen">Belum Absen</option>
+                    </select>
+                </div>
             </div>
 
             <!-- Attendance Table -->
             <div class="table-wrapper">
+                <div class="table-header">
+                    <h2 class="table-title">Data Absensi</h2>
+                    <span class="table-count" id="table-count"></span>
+                </div>
                 <div class="table-container">
                     <table class="attendance-table">
                         <thead>

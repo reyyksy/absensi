@@ -28,7 +28,6 @@ const successName = document.getElementById('success-name');
 const successNumber = document.getElementById('success-number');
 const successTime = document.getElementById('success-time');
 const errorMessage = document.getElementById('error-message');
-const prodiInfo = document.getElementById('prodi-info');
 
 // ===========================
 // INITIALIZATION
@@ -70,15 +69,6 @@ function showState(stateName) {
     });
 
     document.getElementById(states[stateName]).classList.remove('hidden');
-
-    // Show/hide Instagram section based on state
-    if (prodiInfo) {
-        if (stateName === 'search') {
-            prodiInfo.classList.remove('hidden');
-        } else {
-            prodiInfo.classList.add('hidden');
-        }
-    }
 }
 
 // ===========================
