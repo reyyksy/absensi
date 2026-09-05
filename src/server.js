@@ -1,8 +1,10 @@
 const express = require("express");
+const fs = require("fs");
 const path = require("path");
 const session = require("express-session");
 const db = require("./database");
 const exportAttendance = require("./export");
+const membersFile = path.join(__dirname, "members.js");
 
 const app = express();
 const PORT = 3000;
@@ -42,6 +44,66 @@ function getTime() {
         timeZone: "Asia/Jakarta"
     });
 }
+
+function syncMembersFromFile() {
+    delete require.cache[require.resolve("./members")];
+    const roster = require("./members");
+    const attendanceNumbers = new Set();
+
+    for (const member of roster) {
+        const [attendanceNumber, name, className] = member;
+
+        if (!Number.isInteger(attendanceNumber) || !name || !className || attendanceNumbers.has(attendanceNumber)) {
+            throw new Error("Format members.js tidak valid atau nomor absen ganda");
+        }
+
+        attendanceNumbers.add(attendanceNumber);
+    }
+
+    const sync = db.transaction(() => {
+        const upsert = db.prepare(`
+            INSERT INTO members (attendance_number, name, class_name, active)
+            VALUES (?, ?, ?, 1)
+            ON CONFLICT(attendance_number)
+            DO UPDATE SET
+                name = excluded.name,
+                class_name = excluded.class_name,
+                active = 1
+        `);
+
+        for (const [attendanceNumber, name, className] of roster) {
+            upsert.run(attendanceNumber, name, className);
+        }
+
+        if (attendanceNumbers.size === 0) {
+            db.prepare("UPDATE members SET active = 0").run();
+        } else {
+            const placeholders = [...attendanceNumbers].map(() => "?").join(", ");
+            db.prepare(`
+                UPDATE members
+                SET active = 0
+                WHERE attendance_number NOT IN (${placeholders})
+            `).run(...attendanceNumbers);
+        }
+    });
+
+    sync();
+    console.log(`${roster.length} anggota disinkronkan dari members.js.`);
+}
+
+syncMembersFromFile();
+
+let membersSyncTimer;
+const membersWatcher = fs.watch(membersFile, () => {
+    clearTimeout(membersSyncTimer);
+    membersSyncTimer = setTimeout(() => {
+        try {
+            syncMembersFromFile();
+        } catch (error) {
+            console.error(`Gagal menyinkronkan members.js: ${error.message}`);
+        }
+    }, 300);
+});
 
 const meeting = db.prepare(`
     INSERT INTO meetings (started_at, status)
@@ -220,6 +282,9 @@ process.on("SIGINT", async () => {
     console.log("\nMengakhiri pertemuan...");
 
     try {
+        membersWatcher.close();
+        clearTimeout(membersSyncTimer);
+
         db.prepare(`
             INSERT OR IGNORE INTO attendance
             (meeting_id, member_id, status, timestamp)
