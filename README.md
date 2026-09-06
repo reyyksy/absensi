@@ -1,64 +1,100 @@
 # Aplikasi Absensi
 
-## 1. Install Node.js
+## 1. Install Tools
 
-Pilih sesuai sistem operasi:
+Pastikan Node.js, npm, dan Git sudah terpasang.
 
-**Windows PowerShell**
-```powershell
-winget install OpenJS.NodeJS.LTS
-```
-
-**Debian atau Ubuntu**
-```bash
-sudo apt install nodejs npm
-```
-
-**macOS**
-```bash
-brew install node
-```
-
-## 2. Install Dependency
-
-Jalankan di terminal dari folder proyek:
+### Windows PowerShell
 
 ```powershell
-cd D:\absensi-local
+winget install OpenJS.NodeJS.LTS Git.Git
+```
+
+### Debian atau Ubuntu
+
+```bash
+sudo apt update
+sudo apt install -y nodejs npm git
+```
+
+### macOS
+
+Jika Homebrew sudah terpasang:
+
+```bash
+brew install node git
+```
+
+Setelah instalasi, cek versi tools:
+
+```text
+node --version
+npm --version
+git --version
+```
+
+## 2. Unduh Repository
+
+### Melalui GitHub CLI
+
+```bash
+gh repo clone reyyksy/absensi
+```
+
+### Melalui Git
+
+```bash
+git clone https://github.com/reyyksy/absensi.git
+```
+
+## 3. Install Dependency
+
+Masuk ke folder hasil clone, lalu install dependency:
+
+```bash
+cd absensi
 npm install
 ```
 
-Sesuaikan path `D:\absensi-local` jika folder proyek berada di lokasi lain.
+## 4. Atur Password Admin
 
-## 3. Atur Password Admin
+Ganti `passwordbaru` dengan password pilihanmu.
 
-**Windows PowerShell, sementara:**
+### Windows PowerShell
+
+Sementara, hanya berlaku di terminal saat ini:
 
 ```powershell
 $env:ADMIN_PASSWORD = "passwordbaru"
 ```
 
-Perintah di atas hanya berlaku selama terminal tersebut terbuka.
-
-**Opsional, simpan permanen di Windows:**
+Permanen untuk akun Windows:
 
 ```powershell
 [System.Environment]::SetEnvironmentVariable("ADMIN_PASSWORD", "passwordbaru", "User")
 ```
 
-Setelah itu, buka PowerShell baru.
+Setelah memakai cara permanen, buka PowerShell baru.
 
-## 4. Jalankan Aplikasi
+### Linux atau macOS
 
-Jalankan di terminal:
+```bash
+export ADMIN_PASSWORD="passwordbaru"
+```
 
-```powershell
-npm run start:backend
+Perintah ini berlaku selama terminal tersebut terbuka.
+
+## 5. Jalankan Aplikasi
+
+Jalankan di terminal dari folder proyek:
+
+```bash
+node src/server.js
 ```
 
 Buka `http://localhost` di browser.
 
-## 5. Hentikan Aplikasi
+## 6. Hentikan Aplikasi
 
 Tekan `Ctrl+C` di terminal server.
 
