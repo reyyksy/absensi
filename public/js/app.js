@@ -4,6 +4,7 @@
 
 let allMembers = [];
 let selectedMember = null;
+const API_BASE_URL = `${window.location.protocol}//${window.location.hostname}:3000`;
 
 const states = {
     search: 'search-state',
@@ -45,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 async function loadMembers() {
     try {
-        const response = await fetch('/api/members');
+        const response = await fetch(`${API_BASE_URL}/api/members`);
         if (!response.ok) throw new Error('Gagal memuat data');
 
         allMembers = await response.json();
@@ -214,7 +215,7 @@ async function submitAttendance() {
     confirmBtn.innerHTML = '<span class="spinner-inline"></span>Memproses...';
 
     try {
-        const response = await fetch('/api/attendance', {
+        const response = await fetch(`${API_BASE_URL}/api/attendance`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

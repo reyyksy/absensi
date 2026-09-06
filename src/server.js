@@ -7,11 +7,43 @@ const exportAttendance = require("./export");
 const membersFile = path.join(__dirname, "members.js");
 
 const app = express();
+const frontendApp = express();
 const PORT = 3000;
+const FRONTEND_PORT = 80;
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "admin";
 
+app.use((req, res, next) => {
+    const origin = req.headers.origin;
+    let isFrontendOrigin = false;
+
+    if (origin) {
+        try {
+            const originUrl = new URL(origin);
+            isFrontendOrigin = originUrl.protocol === "http:" &&
+                (originUrl.port === "" || originUrl.port === "80") &&
+                originUrl.hostname === req.hostname;
+        } catch {
+            isFrontendOrigin = false;
+        }
+    }
+
+    if (isFrontendOrigin) {
+        res.setHeader("Access-Control-Allow-Origin", origin);
+        res.setHeader("Access-Control-Allow-Credentials", "true");
+        res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+        res.setHeader("Access-Control-Allow-Methods", "GET,POST,PUT,OPTIONS");
+    }
+
+    if (req.method === "OPTIONS") {
+        return res.sendStatus(204);
+    }
+
+    next();
+});
+
 app.use(express.json());
-app.use(express.static(path.join(__dirname, "..", "public")));
+
+frontendApp.use(express.static(path.join(__dirname, "..", "public")));
 
 // Session middleware
 app.use(
@@ -197,6 +229,8 @@ app.post("/api/attendance", (req, res) => {
             VALUES (?, ?, 'hadir', ?)
         `).run(meetingId, member.id, getTime());
 
+        console.log(`[ABSEN] ${getTime()} - ${member.name} (No. ${member.attendance_number}) hadir.`);
+
         res.json({
             success: true,
             message: "Absensi berhasil",
@@ -205,6 +239,7 @@ app.post("/api/attendance", (req, res) => {
 
     } catch (error) {
         if (error.code === "SQLITE_CONSTRAINT_UNIQUE") {
+            console.log(`[ABSEN] ${getTime()} - ${member.name} (No. ${member.attendance_number}) sudah absen.`);
             return res.status(409).json({
                 success: false,
                 message: "Sudah absen"
@@ -267,6 +302,16 @@ app.put("/api/admin/attendance/:memberId", isAuthenticated, (req, res) => {
         status === "hadir" ? getTime() : null
     );
 
+    const member = db.prepare(`
+        SELECT name, attendance_number
+        FROM members
+        WHERE attendance_number = ?
+    `).get(memberId);
+
+    console.log(
+        `[ADMIN] ${getTime()} - ${member ? `${member.name} (No. ${member.attendance_number})` : `No. ${memberId}`} diubah menjadi ${status}.`
+    );
+
     res.json({
         success: true,
         message: "Status diperbarui"
@@ -274,7 +319,11 @@ app.put("/api/admin/attendance/:memberId", isAuthenticated, (req, res) => {
 });
 
 const server = app.listen(PORT, "0.0.0.0", () => {
-    console.log(`Web server: http://localhost:${PORT}`);
+    console.log(`API server: http://localhost:${PORT}`);
+});
+
+const frontendServer = frontendApp.listen(FRONTEND_PORT, "0.0.0.0", () => {
+    console.log(`Web server: http://localhost:${FRONTEND_PORT}`);
 });
 
 // Ctrl+C
@@ -309,9 +358,11 @@ process.on("SIGINT", async () => {
         await exportAttendance(db, meetingId);
 
         server.close(() => {
-            db.close();
-            console.log("Server berhenti.");
-            process.exit(0);
+            frontendServer.close(() => {
+                db.close();
+                console.log("Server berhenti.");
+                process.exit(0);
+            });
         });
 
     } catch (error) {

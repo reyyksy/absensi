@@ -4,6 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start:backend": "node src/server.js",
+    "start:frontend": "node src/frontend-server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

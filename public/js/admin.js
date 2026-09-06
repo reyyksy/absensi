@@ -6,6 +6,7 @@ let allAttendance = [];
 let filteredAttendance = [];
 let isAuthenticated = false;
 let selectedMemberId = null;
+const API_BASE_URL = `${window.location.protocol}//${window.location.hostname}:3000`;
 
 // ===========================
 // DOM ELEMENTS
@@ -51,7 +52,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 async function checkAuthentication() {
     try {
-        const response = await fetch('/api/admin/session');
+        const response = await fetch(`${API_BASE_URL}/api/admin/session`, {
+            credentials: 'include'
+        });
 
         if (response.ok) {
             isAuthenticated = true;
@@ -67,8 +70,9 @@ async function checkAuthentication() {
 
 async function login(password) {
     try {
-        const response = await fetch('/api/admin/login', {
+        const response = await fetch(`${API_BASE_URL}/api/admin/login`, {
             method: 'POST',
+            credentials: 'include',
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -95,8 +99,9 @@ async function login(password) {
 
 async function logout() {
     try {
-        await fetch('/api/admin/logout', {
-            method: 'POST'
+        await fetch(`${API_BASE_URL}/api/admin/logout`, {
+            method: 'POST',
+            credentials: 'include'
         });
 
         isAuthenticated = false;
@@ -127,7 +132,9 @@ async function loadAttendanceData() {
     attendanceTbody.innerHTML = '';
 
     try {
-        const response = await fetch('/api/admin/attendance');
+        const response = await fetch(`${API_BASE_URL}/api/admin/attendance`, {
+            credentials: 'include'
+        });
 
         if (response.status === 401) {
             showLogin();
@@ -295,8 +302,9 @@ async function changeStatus(newStatus) {
     if (!selectedMemberId) return;
 
     try {
-        const response = await fetch(`/api/admin/attendance/${selectedMemberId}`, {
+        const response = await fetch(`${API_BASE_URL}/api/admin/attendance/${selectedMemberId}`, {
             method: 'PUT',
+            credentials: 'include',
             headers: {
                 'Content-Type': 'application/json'
             },
