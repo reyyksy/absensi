@@ -114,14 +114,36 @@ http://localhost/admin.html
 
 Login admin menggunakan password dari `ADMIN_PASSWORD`.
 
-## 7. Port yang Digunakan
+## 7. Mengubah Nama atau Kelas
+
+Edit file berikut:
+
+```text
+src/members.js
+```
+
+Format setiap anggota:
+
+```javascript
+[nomor_absen, "nama", "kelas"]
+```
+
+Contoh:
+
+```javascript
+[1, "NAMA BARU", "10 A TJKT"]
+```
+
+Setelah mengubah dan menyimpan file, data akan tersinkron otomatis. Pastikan nomor absen tidak kosong dan tidak boleh sama dengan anggota lain.
+
+## 8. Port yang Digunakan
 
 | Fungsi | Port | Alamat |
 | --- | ---: | --- |
 | Web client dan admin | `80` | `http://localhost` |
 | API backend | `3000` | Internal, tidak perlu dibuka langsung |
 
-## 8. Hentikan Aplikasi
+## 9. Hentikan Aplikasi
 
 Tekan `Ctrl+C` di terminal server.
 
