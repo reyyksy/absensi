@@ -94,7 +94,34 @@ node src/server.js
 
 Buka `http://localhost` di browser.
 
-## 6. Hentikan Aplikasi
+## 6. Akses Client dan Admin
+
+### Client
+
+Digunakan untuk melakukan absensi:
+
+```text
+http://localhost/
+```
+
+### Admin
+
+Digunakan untuk melihat dashboard, mengelola data, dan mengunduh hasil absensi:
+
+```text
+http://localhost/admin.html
+```
+
+Login admin menggunakan password dari `ADMIN_PASSWORD`.
+
+## 7. Port yang Digunakan
+
+| Fungsi | Port | Alamat |
+| --- | ---: | --- |
+| Web client dan admin | `80` | `http://localhost` |
+| API backend | `3000` | Internal, tidak perlu dibuka langsung |
+
+## 8. Hentikan Aplikasi
 
 Tekan `Ctrl+C` di terminal server.
 
