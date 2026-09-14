@@ -7,33 +7,33 @@
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
 :root {
-    /* Primary — Deep Teal */
-    --teal-900: #0a2e2e;
-    --teal-800: #0f3d3d;
-    --teal-700: #145252;
-    --teal-600: #1a6b6b;
-    --teal-500: #227f7f;
-    --teal-400: #4fa3a3;
-    --teal-100: #dcefee;
-    --teal-50:  #f0f8f7;
+    /* Primary — Blue */
+    --teal-900: #0f172a;
+    --teal-800: #1e293b;
+    --teal-700: #2563eb;
+    --teal-600: #1d4ed8;
+    --teal-500: #3b82f6;
+    --teal-400: #93c5fd;
+    --teal-100: #dbeafe;
+    --teal-50:  #f8fafc;
 
     /* Neutrals */
-    --ink-900: #16211f;
-    --ink-700: #3d4a47;
-    --ink-500: #6b7876;
-    --ink-400: #8f9c99;
-    --ink-300: #c2ccc9;
-    --ink-200: #dde4e1;
-    --ink-100: #eef2f0;
-    --paper:   #faf9f5;
+    --ink-900: #0f172a;
+    --ink-700: #334155;
+    --ink-500: #64748b;
+    --ink-400: #94a3b8;
+    --ink-300: #cbd5e1;
+    --ink-200: #e2e8f0;
+    --ink-100: #f1f5f9;
+    --paper:   #f8fafc;
     --white:   #ffffff;
 
-    /* Accent — Warm Amber */
-    --amber-700: #92400e;
-    --amber-600: #b45309;
-    --amber-500: #d97706;
-    --amber-100: #fdecd3;
-    --amber-50:  #fef8ef;
+    /* Accent — Blue */
+    --amber-700: #1d4ed8;
+    --amber-600: #2563eb;
+    --amber-500: #3b82f6;
+    --amber-100: #dbeafe;
+    --amber-50:  #eff6ff;
 
     /* Semantic — status */
     --status-hadir: #1a8a4a;
@@ -73,9 +73,9 @@
     --radius-lg: 14px;
     --radius-full: 9999px;
 
-    --shadow-sm: 0 1px 2px rgba(15, 61, 61, 0.06);
-    --shadow-md: 0 4px 12px rgba(15, 61, 61, 0.08);
-    --shadow-lg: 0 12px 28px rgba(15, 61, 61, 0.10);
+    --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.06);
+    --shadow-md: 0 4px 12px rgba(15, 23, 42, 0.08);
+    --shadow-lg: 0 12px 28px rgba(15, 23, 42, 0.10);
 }
 
 /* ---- Reset ---- */
@@ -224,13 +224,14 @@ body {
 
 /* ---- Header ---- */
 .admin-header {
-    background: var(--teal-800);
-    color: var(--white);
+    background: var(--amber-50);
+    color: var(--ink-900);
     padding: var(--space-4) var(--space-6);
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 3px solid var(--amber-500);
+    border-bottom: 3px solid var(--teal-700);
+    box-shadow: var(--shadow-sm);
     gap: var(--space-4);
     flex-wrap: wrap;
 }
@@ -249,6 +250,7 @@ body {
     object-fit: contain;
     border-radius: var(--radius-sm);
     background: var(--white);
+    border: 1px solid var(--ink-200);
     padding: 3px;
     flex-shrink: 0;
 }
@@ -256,24 +258,24 @@ body {
 .header-text { flex: 1; min-width: 0; }
 
 .header-institution {
-    font-size: 0.625rem;
-    font-weight: 700;
-    color: var(--amber-500);
-    letter-spacing: 0.4px;
+    font-size: 0.8125rem;
+    font-weight: 800;
+    color: var(--teal-700);
+    letter-spacing: 0.6px;
     margin-bottom: 1px;
 }
 
 .header-prodi {
     font-size: 0.75rem;
     font-weight: 500;
-    color: rgba(255, 255, 255, 0.75);
+    color: var(--ink-500);
     margin-bottom: 1px;
 }
 
 .header-system {
-    font-size: 1.0625rem;
-    font-weight: 700;
-    color: var(--white);
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--teal-900);
     letter-spacing: -0.2px;
 }
 
@@ -288,7 +290,8 @@ body {
     display: inline-flex;
     align-items: center;
     padding: 5px 12px;
-    background: var(--amber-500);
+    background: var(--teal-100);
+    color: var(--teal-700);
     color: var(--white);
     font-size: 0.6875rem;
     font-weight: 700;
@@ -319,11 +322,11 @@ body {
 .btn-primary:hover { background: var(--teal-800); }
 
 .btn-secondary {
-    background: rgba(255, 255, 255, 0.12);
-    color: var(--white);
-    border: 1px solid rgba(255, 255, 255, 0.25);
+    background: var(--teal-50);
+    color: var(--teal-700);
+    border: 1px solid var(--teal-400);
 }
-.btn-secondary:hover { background: rgba(255, 255, 255, 0.2); }
+.btn-secondary:hover { background: var(--teal-100); }
 
 .btn-full { width: 100%; }
 
@@ -724,7 +727,8 @@ body {
     .login-card { padding: var(--space-8) var(--space-5); }
     .admin-header { padding: var(--space-4); }
     .header-logo { width: 36px; height: 36px; }
-    .header-system { font-size: 0.9375rem; }
+    .header-institution { font-size: 0.75rem; }
+    .header-system { font-size: 1.0625rem; }
     .statistics { grid-template-columns: 1fr 1fr; padding: var(--space-4); }
     .stat-card h3 { font-size: 0.625rem; }
     .stat-number { font-size: 1.1875rem; }

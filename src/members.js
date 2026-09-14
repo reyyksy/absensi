@@ -34,7 +34,7 @@ const members = [
     [33, "MELINDA", "12 TJKT"],
     [34, "NAZWA DARA", "12 TJKT"],
     [35, "SALWA", "12 TJKT"],
-    [36, "NAWAL", "12 TKJ"]
+    [36, "NAWAL", "12 TJKT"],
 ];
 
 module.exports = members;
