@@ -10,8 +10,7 @@ const app = express();
 const frontendApp = express();
 const PORT = 3000;
 const FRONTEND_PORT = 80;
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "admin";
-
+const ADMIN_PASSWORD = "tjkt@yasbam1029";
 app.use((req, res, next) => {
     const origin = req.headers.origin;
     let isFrontendOrigin = false;
